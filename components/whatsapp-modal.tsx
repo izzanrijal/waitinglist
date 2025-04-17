@@ -46,6 +46,7 @@ export function WhatsAppModal({ open, onOpenChange, email, onSuccess }: WhatsApp
     if (value) validateWhatsApp(value)
   }
 
+  // Update the handleSubmit function to make it asynchronous
   async function handleSubmit(formData: FormData) {
     // Validate WhatsApp before submission
     if (!validateWhatsApp(whatsapp)) {
@@ -55,63 +56,48 @@ export function WhatsAppModal({ open, onOpenChange, email, onSuccess }: WhatsApp
     setIsSubmitting(true)
     formData.append("email", email)
 
-    try {
-      const result = await submitEmailAndWhatsApp(formData)
+    // Show success immediately without waiting for the database operation
+    setSuccess(true)
+    if (onSuccess) onSuccess()
 
-      if (result.success) {
-        setSuccess(true)
-        if (onSuccess) onSuccess()
-      } else {
+    // Process the submission asynchronously
+    submitEmailAndWhatsApp(formData)
+      .catch((error) => {
+        console.error("Error submitting form:", error)
         toast({
           title: "Error",
-          description: result.message || "Terjadi kesalahan. Silakan coba lagi.",
+          description: "Terjadi kesalahan saat menyimpan data. Namun, kamu tetap terdaftar.",
           variant: "destructive",
         })
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Terjadi kesalahan. Silakan coba lagi.",
-        variant: "destructive",
       })
-    } finally {
-      setIsSubmitting(false)
-    }
+      .finally(() => {
+        setIsSubmitting(false)
+      })
   }
 
-  const handleSkip = async () => {
+  // Update the handleSkip function to make it asynchronous
+  const handleSkip = () => {
     setIsSubmitting(true)
 
-    try {
-      // Submit just the email without WhatsApp
-      const formData = new FormData()
-      formData.append("email", email)
+    // Close modal immediately without waiting for the database operation
+    toast({
+      title: "Berhasil",
+      description: "Kamu telah berhasil terdaftar di waitlist.",
+    })
+    onOpenChange(false)
+    if (onSuccess) onSuccess()
 
-      const result = await submitEmailAndWhatsApp(formData)
+    // Process the submission asynchronously
+    const formData = new FormData()
+    formData.append("email", email)
 
-      if (result.success) {
-        toast({
-          title: "Berhasil",
-          description: "Kamu telah berhasil terdaftar di waitlist.",
-        })
-        onOpenChange(false)
-        if (onSuccess) onSuccess()
-      } else {
-        toast({
-          title: "Error",
-          description: result.message || "Terjadi kesalahan. Silakan coba lagi.",
-          variant: "destructive",
-        })
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Terjadi kesalahan. Silakan coba lagi.",
-        variant: "destructive",
+    submitEmailAndWhatsApp(formData)
+      .catch((error) => {
+        console.error("Error submitting form:", error)
       })
-    } finally {
-      setIsSubmitting(false)
-    }
+      .finally(() => {
+        setIsSubmitting(false)
+      })
   }
 
   return (
@@ -124,7 +110,7 @@ export function WhatsAppModal({ open, onOpenChange, email, onSuccess }: WhatsApp
               <DialogDescription className="text-base pt-2">
                 <span className="block mb-2">Email kamu sedang diproses.</span>
                 Berikan nomor WhatsApp kamu untuk mendapatkan diskon 50% dari harga normal Rp 38.500 saat peluncuran
-                Exahire
+                KuliahDimana
               </DialogDescription>
             </DialogHeader>
             <form action={handleSubmit} className="space-y-4 pt-4">
@@ -168,7 +154,7 @@ export function WhatsAppModal({ open, onOpenChange, email, onSuccess }: WhatsApp
             </div>
             <h3 className="text-2xl font-bold mb-2">Terima Kasih!</h3>
             <p className="text-gray-600 mb-6">
-              Kamu telah berhasil terdaftar dan akan mendapatkan diskon 50% saat peluncuran Exahire.
+              Kamu telah berhasil terdaftar dan akan mendapatkan diskon 50% saat peluncuran KuliahDimana.
             </p>
             <Button onClick={() => onOpenChange(false)}>Tutup</Button>
           </div>

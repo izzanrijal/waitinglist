@@ -3,11 +3,11 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { WhatsAppModal } from "./whatsapp-modal"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2 } from "lucide-react"
+import { TrackingButton } from "./tracking-button"
 
 export function SignupForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -45,14 +45,11 @@ export function SignupForm() {
       return
     }
 
-    setIsSubmitting(true)
-
     // Store email for WhatsApp modal
     setSubmittedEmail(emailInput)
 
     // Show WhatsApp modal immediately
     setShowWhatsAppModal(true)
-    setIsSubmitting(false)
   }
 
   const handleSuccess = () => {
@@ -67,7 +64,7 @@ export function SignupForm() {
       <div className="container px-4 md:px-6 relative">
         <div className="max-w-[600px] mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">
-            Gabung Waitlist <span className="text-primary">Exahire</span>
+            Gabung Waitlist <span className="text-primary">KuliahDimana</span>
           </h2>
           <p className="text-xl text-gray-600 mb-8">
             Ikuti tes singkat dan dapatkan rekomendasi jurusan yang sesuai dengan minat dan bakatmu untuk masa depan
@@ -86,7 +83,7 @@ export function SignupForm() {
               />
               {emailError && <p className="text-sm text-red-500 text-left mt-1">{emailError}</p>}
             </div>
-            <Button type="submit" disabled={isSubmitting} className="h-12">
+            <TrackingButton type="submit" disabled={isSubmitting} className="h-12" buttonName="signup_form_submit">
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -95,7 +92,7 @@ export function SignupForm() {
               ) : (
                 "Gabung Waitlist"
               )}
-            </Button>
+            </TrackingButton>
           </form>
 
           <p className="text-sm text-gray-500 mt-4">

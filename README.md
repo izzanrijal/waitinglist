@@ -1,6 +1,6 @@
-# Exahire Landing Page
+# KuliahDimana Landing Page
 
-A landing page for Exahire, targeting pre-college students in Indonesia, guiding them toward future-proof majors that won't be easily replaced by AI.
+A landing page for KuliahDimana, targeting pre-college students in Indonesia, guiding them toward future-proof majors that won't be easily replaced by AI.
 
 ## Features
 

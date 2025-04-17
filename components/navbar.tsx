@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { TrackingButton } from "./tracking-button"
 
 export function Navbar() {
   return (
@@ -7,7 +7,7 @@ export function Navbar() {
       <div className="container flex items-center justify-between h-16 px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Exahire
+            KuliahDimana
           </span>
         </Link>
         <nav className="hidden md:flex items-center gap-6">
@@ -22,12 +22,9 @@ export function Navbar() {
           </Link>
         </nav>
         <div className="flex items-center gap-4">
-          <Button variant="outline" className="hidden md:flex">
-            Masuk
-          </Button>
-          <Button asChild>
+          <TrackingButton asChild buttonName="navbar_cta">
             <a href="#daftar">Gabung Waitlist</a>
-          </Button>
+          </TrackingButton>
         </div>
       </div>
     </header>

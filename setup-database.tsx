@@ -27,11 +27,30 @@ CREATE TABLE IF NOT EXISTS analytics (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Create time-based analytics table for 6-hour intervals
+CREATE TABLE IF NOT EXISTS time_analytics (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  date DATE NOT NULL,
+  time_slot TEXT NOT NULL, -- '00-06', '06-12', '12-18', '18-24'
+  unique_visitors INTEGER DEFAULT 0,
+  cta_clicks INTEGER DEFAULT 0,
+  email_conversions INTEGER DEFAULT 0,
+  whatsapp_conversions INTEGER DEFAULT 0,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create unique constraint on date and time_slot
+CREATE UNIQUE INDEX IF NOT EXISTS time_analytics_date_slot_idx ON time_analytics (date, time_slot);
+
 -- Create index on email for faster lookups
 CREATE INDEX IF NOT EXISTS signups_email_idx ON signups (email);
 
 -- Create index on event type for analytics queries
-CREATE INDEX IF NOT EXISTS analytics_event_idx ON analytics (event);`
+CREATE INDEX IF NOT EXISTS analytics_event_idx ON analytics (event);
+
+-- Create index on date and time_slot for time_analytics
+CREATE INDEX IF NOT EXISTS time_analytics_date_idx ON time_analytics (date);`
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(sqlScript)

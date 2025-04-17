@@ -10,7 +10,7 @@ export function Footer() {
               href="/"
               className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
             >
-              Exahire
+              KuliahDimana
             </Link>
             <p className="mt-2 text-gray-600 max-w-md">
               Membantu pelajar Indonesia menemukan jurusan kuliah yang sesuai dengan minat dan bakat, serta tahan
@@ -49,7 +49,7 @@ export function Footer() {
         </div>
 
         <div className="border-t mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-600 text-sm">&copy; {new Date().getFullYear()} Exahire. Hak Cipta Dilindungi.</p>
+          <p className="text-gray-600 text-sm">&copy; {new Date().getFullYear()} KuliahDimana. Hak Cipta Dilindungi.</p>
           <div className="flex gap-4 mt-4 md:mt-0">
             <Link href="/privacy" className="text-gray-600 hover:text-primary transition-colors text-sm">
               Kebijakan Privasi
